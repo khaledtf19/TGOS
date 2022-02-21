@@ -1,0 +1,12 @@
+.page__container {
+  margin: 2rem 0rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 500px) {
+  .page__container {
+    margin: 2rem 6rem;
+  }
+}

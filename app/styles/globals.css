@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap");
+
+:root {
+  --font-family: "Lato", sans-serif;
+  --color-bg: #f2f2f2;
+  --color-text: #b0925a;
+  --color-text2: #2e2e2e;
+  --color-text3: #c2ac84;
+  --color-text4: #e4e6eb;
+  --color-border: #b0925a;
+  --color-navMenu: rgba(36, 37, 38, 0.9);
+  --color-btn: #f2f2f2;
+
+  --color-footer: #031b34;
+  --color-primary: rgb(36, 37, 38);
+
+  --color-page: #031b34;
+  --color-hover: #3a3b3c;
+  --color-comment: #3a3b3c;
+  --color-hover2: #4e4f50;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  padding: 0;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+div,
+li,
+ul,
+a,
+h1,
+h2,
+p {
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  text-transform: uppercase;
+}
+
+img {
+  width: 100%;
+  max-width: 100px;
+}

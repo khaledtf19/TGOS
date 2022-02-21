@@ -1,0 +1,24 @@
+.homePage__container {
+  overflow: hidden;
+}
+
+.mp__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 10px;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.link:hover {
+  transform: scale(1.1);
+  opacity: 80%;
+}

@@ -1,0 +1,9 @@
+.slider__container {
+  overflow: hidden;
+  background-color: var(--color-text2);
+  padding: 10px;
+}
+.cards__container {
+  display: flex;
+  gap: 5px;
+}
