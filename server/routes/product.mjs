@@ -9,7 +9,17 @@ import { productValidation } from "../validation/productV.mjs";
 
 // Get All
 router.get("/", async (req, res) => {
-  const products = await Product.find().sort("-updated");
+  const filter = req.query.filter;
+  let products = null;
+
+  if (!filter) {
+    products = await Product.find().sort("-updated");
+  } else {
+    products = await Product.find({
+      product_type: filter,
+    }).sort("-updated");
+  }
+
   res.json({ data: products });
 });
 
@@ -123,7 +133,17 @@ router.post("/user", async (req, res) => {
     res.status(404).json({ Error: "Invalid user id" });
   }
 
-  const products = await Product.find({ madeBy: id }).sort("-updated");
+  const filter = req.query.filter;
+  let products = null;
+
+  if (!filter) {
+    products = await Product.find({ madeBy: id }).sort("-updated");
+  } else {
+    products = await Product.find({
+      madeBy: id,
+      product_type: filter,
+    }).sort("-updated");
+  }
 
   res.json({ data: products });
 });
