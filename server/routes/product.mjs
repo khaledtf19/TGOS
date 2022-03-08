@@ -1,8 +1,10 @@
 import express from "express";
+import { ObjectId } from "mongodb";
 const router = express.Router();
 
 import User from "../models/User.mjs";
 import Product from "../models/Product.mjs";
+import Rate from "../models/Rate.mjs";
 import verify from "../middleware/verify.js";
 
 import { productValidation } from "../validation/productV.mjs";
@@ -70,9 +72,18 @@ router.post("/create", verify, async (req, res) => {
 // Get By Id
 router.get("/product", async (req, res) => {
   const id = req.query.id;
-  const product = await Product.findById(id);
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).json({ Error: "Product id is not valid" });
+  }
+
+  const product = await Product.findById(id)
+    .populate("madeBy", "name")
+    .populate({
+      path: "rates",
+      populate: { path: "madeBy", select: "name" },
+    });
   if (!product) {
-    res.status(404).json({ Error: "Product not found" });
+    return res.status(404).json({ Error: "Product not found" });
   }
   res.json({ data: product });
 });
@@ -81,17 +92,24 @@ router.get("/product", async (req, res) => {
 router.delete("/delete", verify, async (req, res) => {
   const id = req.query.id;
 
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).json({ Error: "Product id is not valid" });
+  }
+
   const product = await Product.findById(id);
   if (!product) {
-    res.status(404).json({ Error: "Product not found" });
+    return res.status(404).json({ Error: "Product not found" });
   }
 
   if (product.madeBy != req.user._id) {
-    res.status(401).json({ Error: "You can't delete this product" });
+    return res.status(401).json({ Error: "You can't delete this product" });
   }
+
   const user = await User.findById(req.user._id);
   let index = user.own_products.indexOf(product._id);
   user.own_products.splice(index, 1);
+
+  const rates = await Rate.find({ product: product._id }).deleteMany();
 
   await Product.findByIdAndDelete(id);
   await user.save();
@@ -102,9 +120,13 @@ router.delete("/delete", verify, async (req, res) => {
 router.post("/like", verify, async (req, res) => {
   const id = req.query.id;
 
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).json({ Error: "Product id is not valid" });
+  }
+
   const product = await Product.findById(id);
   if (!product) {
-    res.status(404).json({ Error: "Product not found" });
+    return res.status(404).json({ Error: "Product not found" });
   }
 
   if (product.likesFrom.includes(req.user._id)) {
@@ -125,12 +147,16 @@ router.post("/like", verify, async (req, res) => {
 router.post("/user", async (req, res) => {
   const id = req.query.id;
 
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).json({ Error: "user id is not valid" });
+  }
+
   if (!id) {
-    res.status(404).json({ Error: "Need user id" });
+    return res.status(404).json({ Error: "Need user id" });
   }
   const user = await User.findById(id);
   if (!user) {
-    res.status(404).json({ Error: "Invalid user id" });
+    return res.status(404).json({ Error: "Invalid user id" });
   }
 
   const filter = req.query.filter;

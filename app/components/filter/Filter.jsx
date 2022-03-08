@@ -4,7 +4,7 @@ import classes from "./Filter.module.css";
 import Select from "react-select";
 import { useEffect } from "react";
 
-function Filter({ setFilter, filter, setFProducts, products }) {
+function Filter({ setFilter, setFProducts, products }) {
   const [selected, setSelected] = useState("");
 
   const options = [
@@ -41,7 +41,7 @@ function Filter({ setFilter, filter, setFProducts, products }) {
 
   return (
     <div className={classes.filter__container}>
-      <div className={classes.search__part}>search</div>
+      <div className={classes.search__part}>search...</div>
       <div className={classes.filter__part}>
         <Select
           options={options}

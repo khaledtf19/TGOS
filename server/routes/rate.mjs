@@ -1,4 +1,6 @@
 import express from "express";
+import { ObjectId } from "mongodb";
+
 const router = express.Router();
 
 import User from "../models/User.mjs";
@@ -20,9 +22,13 @@ router.post("/create", verify, async (req, res) => {
     rateContent: rateContent,
   });
 
+  if (!ObjectId.isValid(productId)) {
+    return res.status(404).json({ Error: "Product id is not valid" });
+  }
+
   const product = await Product.findById(productId);
   if (!product) {
-    res.status(404).json({ Error: "Product not found" });
+    return res.status(404).json({ Error: "Product not found" });
   }
 
   product.rates = [...product.rates, newRate._id];
@@ -37,15 +43,15 @@ router.delete("/delete", verify, async (req, res) => {
 
   const rate = await Rate.findById(rateId);
   if (!rate) {
-    res.status(404).json({ Error: "Rate not found" });
+    return res.status(404).json({ Error: "Rate not found" });
   }
   if (rate.madeBy != req.user._id) {
-    res.status(401).json({ Error: "You can't delete this..." });
+    return res.status(401).json({ Error: "You can't delete this..." });
   }
 
   const product = await Product.findById(productId);
   if (!product) {
-    res.status(404).json({ Error: "Product not found" });
+    return res.status(404).json({ Error: "Product not found" });
   }
 
   let index = product.rates.indexOf(rate._id);
@@ -63,7 +69,7 @@ router.post("/product", async (req, res) => {
 
   const rates = await Rate.find({ product: productId });
   if (!rates) {
-    res.status(404).json({ Error: "rates not found" });
+    return res.status(404).json({ Error: "rates not found" });
   }
   res.json({ data: rates });
 });

@@ -42,7 +42,6 @@ function ProfilePage() {
     <div className={classes.profilePage__container}>
       <Filter
         setFilter={setFilter}
-        filter={filter}
         setFProducts={setFProducts}
         products={products}
       />

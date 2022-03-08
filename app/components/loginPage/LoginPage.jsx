@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -18,7 +18,6 @@ const LoginPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [errorText, setErrorText] = useState("");
 
-  const [navMenu, setNavMenu] = useState(false);
   const { user, render } = useContext(AuthContext);
   const [userData, setUserData] = user;
   const [rerender, setRerender] = render;

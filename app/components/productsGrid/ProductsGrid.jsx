@@ -7,7 +7,7 @@ function ProductsGrid({ products }) {
   console.log(products);
   return (
     <motion.div layout className={classes.grid__container}>
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence>
         {products.map((product) => {
           return <ProductCard product={product} key={product._id} />;
         })}

@@ -17,5 +17,11 @@
   justify-content: center;
 }
 .filter {
-  width: 50%;
+  width: 100%;
+}
+
+@media (min-width: 500px) {
+  .filter {
+    width: 60%;
+  }
 }

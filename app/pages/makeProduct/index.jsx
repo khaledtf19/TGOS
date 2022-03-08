@@ -1,8 +1,10 @@
+import MakeProductPage from "../../components/makeProductPage/MakeProductPage";
+
 const MakeProduct = () => {
   return (
-    <div>
-      <h1>make product</h1>
-    </div>
+    <>
+      <MakeProductPage />
+    </>
   );
 };
 

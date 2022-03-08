@@ -13,7 +13,7 @@ export default function Home({ products }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context) {
   const res = await fetch(`http://localhost:8080/api/products`);
   const products = await res.json();
 
@@ -21,6 +21,5 @@ export async function getStaticProps() {
     props: {
       products,
     },
-    revalidate: 10,
   };
 }
